@@ -1,6 +1,7 @@
 package jin.membership.controller;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,9 +12,8 @@ import org.apache.commons.logging.LogFactory;
 import jin.membership.control.Controller;
 import jin.membership.dao.MembershipDAO;
 import jin.membership.dto.MembershipDTO;
-import jin.membership.frontcontroller.MembershipDispatcherServlet;
 import jin.membership.handler.MembershipHandlerAdapter;
-import oracle.net.aso.m;
+
 
 public class MembershipInsertController implements Controller{
 	private static Log log = LogFactory.getLog(MembershipInsertController.class);
@@ -34,14 +34,24 @@ public class MembershipInsertController implements Controller{
         	payment_price = 7000;
         }
         
-        // 현재 날짜와 시간 가져오기 (Java 8 이상)
+     // 현재 날짜와 시간 가져오기 (Java 8 이상)
         LocalDateTime payment_date = LocalDateTime.now();
 
+        // LocalDateTime을 문자열로 변환
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String formattedDate = payment_date.format(formatter);
+        
 //      멤버십 정보를 멤버십 DTO 객체에 저장 (사용자 아이디는 나중에 로그인 연동 시 처리할 예정)
         MembershipDTO membershipDTO = new MembershipDTO();
         membershipDTO.setUser_id(user_id);
         membershipDTO.setMembership_grade(membership_grade);
-        membershipDTO.setPayment_date(payment_date);
+        
+     // payment_date 값을 설정하지 않고, SQL에서 sysdate를 사용하므로 제거       
+//        membershipDTO.setPayment_date();
+        
+     // 현재 날짜를 문자열로 저장
+        membershipDTO.setPayment_date(formattedDate); 
+        
         membershipDTO.setPayment_method(payment_method);
         membershipDTO.setPayment_price(payment_price);
         

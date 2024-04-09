@@ -60,7 +60,8 @@ public class MembershipDAO implements MembershipService{
             	membershipDTO.setMembership_grade(resultSet.getString("membership_grade"));
 //            	그냥 TimeStamp로 하면 오류나서 .toLocalDateTime()을 붙여주니 해결
 //            	DTO에서는 LocalDateTime으로 저장해서 생긴 문제
-            	membershipDTO.setPayment_date(resultSet.getTimestamp("payment_date").toLocalDateTime()); // payment_date 값 설정
+//            	sysdate로 저장하기 때문에 이제 setPayment_date를 호출 안해도 됨
+//            	membershipDTO.setPayment_date(resultSet.getTimestamp("payment_date").toLocalDateTime()); // payment_date 값 설정
             	membershipDTO.setPayment_method(resultSet.getString("payment_method")); // payment_method 값 설정
             	membershipDTO.setPayment_price(resultSet.getInt("payment_price")); // payment_price 값 설정
                 
@@ -94,7 +95,7 @@ public class MembershipDAO implements MembershipService{
             connection = dataSource.getConnection();
 
             String sql = "INSERT INTO membership (user_id, membership_grade, payment_date, payment_method, payment_price ) ";
-            sql += "VALUES (?, ?, ?, ?, ?)";
+            sql += "VALUES (?, ?, sysdate, ?, ?)";
 
             log.info("SQL 확인 - " + sql);
 
@@ -102,9 +103,9 @@ public class MembershipDAO implements MembershipService{
 
             preparedStatement.setString(1, membershipDTO.getUser_id());
             preparedStatement.setString(2, membershipDTO.getMembership_grade());
-            preparedStatement.setTimestamp(3, java.sql.Timestamp.valueOf(membershipDTO.getPayment_date()));
-            preparedStatement.setString(4, membershipDTO.getPayment_method());
-            preparedStatement.setInt(5, membershipDTO.getPayment_price());
+//            preparedStatement.setTimestamp(3, java.sql.Timestamp.valueOf(membershipDTO.getPayment_date()));
+            preparedStatement.setString(3, membershipDTO.getPayment_method());
+            preparedStatement.setInt(4, membershipDTO.getPayment_price());
 
             int count = preparedStatement.executeUpdate();
 
