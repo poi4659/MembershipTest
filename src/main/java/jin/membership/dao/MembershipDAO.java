@@ -19,20 +19,64 @@ import jin.membership.service.MembershipService;
 public class MembershipDAO implements MembershipService{
     private static final Log log = LogFactory.getLog(MembershipDAO.class);
 
+//  멤버십 전체 조회
     @Override
     public ArrayList<MembershipDTO> membershipSelectAll() {
         // TODO Auto-generated method stub
         return null;
     }
 
+//  멤버십 상세 조회
     @Override
     public MembershipDTO membershipSelect(MembershipDTO membershipDTO) {
-        // TODO Auto-generated method stub
-        return null;
+    	Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        
+        try {
+            // 데이터베이스 연결
+            Context context = new InitialContext();
+            DataSource dataSource = (DataSource) context.lookup("java:comp/env/jdbc");
+            connection = dataSource.getConnection();
+
+            String sql = "select user_id, membership_grade, to_char(payment_date, 'yyyy-mm-dd') payment_date, payment_method, payment_price from membership";
+            sql += " where user_id = ? ";
+
+        	preparedStatement = connection.prepareStatement(sql);
+        	preparedStatement.setString(1, membershipDTO.getUser_id( ));
+            
+            // 쿼리 실행
+            resultSet = preparedStatement.executeQuery();
+
+            // 조회 결과 처리
+            if (resultSet.next()) {
+            	// 멤버십 정보 생성 및 설정
+            	log.info("아이디 확인 - " + resultSet.getString("user_id"));
+            	membershipDTO.setUser_id(resultSet.getString("user_id"));
+                membershipDTO.setMembership_grade(resultSet.getString("membership_grade"));
+                membershipDTO.setPayment_date(resultSet.getString("payment_date"));
+                membershipDTO.setPayment_method(resultSet.getString("payment_method"));
+                membershipDTO.setPayment_price(resultSet.getInt("payment_price"));
+                
+            }
+        } catch (Exception e) {
+            log.error("멤버십 정보 상세 조회 실패: " + e.getMessage());
+        } finally {
+            // 리소스 해제
+            try {
+            	resultSet.close( );
+				preparedStatement.close( );
+				connection.close( );
+            } catch (SQLException e) {
+                log.error("리소스 해제 실패: " + e.getMessage());
+            }
+        }
+
+        return membershipDTO;
     }
 
 //  사용자 아이디 데이터베이스에서 조회
-    public MembershipDTO getMembershipByUserId(String userId) {
+    public MembershipDTO getMembershipByUserId(String user_id) {
         MembershipDTO membershipDTO = null;
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -47,7 +91,7 @@ public class MembershipDAO implements MembershipService{
             // SQL 쿼리 작성
             String sql = "SELECT * FROM membership WHERE user_id = ?";
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, userId);
+            preparedStatement.setString(1, user_id);
 
             // 쿼리 실행
             resultSet = preparedStatement.executeQuery();
@@ -71,9 +115,9 @@ public class MembershipDAO implements MembershipService{
         } finally {
             // 리소스 해제
             try {
-                if (resultSet != null) resultSet.close();
-                if (preparedStatement != null) preparedStatement.close();
-                if (connection != null) connection.close();
+            	resultSet.close( );
+				preparedStatement.close( );
+				connection.close( );
             } catch (SQLException e) {
                 log.error("리소스 해제 실패: " + e.getMessage());
             }
@@ -123,12 +167,8 @@ public class MembershipDAO implements MembershipService{
             log.info("멤버십 가입 실패 - " + e);
         } finally {
             try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
+				preparedStatement.close( );
+				connection.close( );
             } catch (SQLException e) {
                 e.printStackTrace();
             }
