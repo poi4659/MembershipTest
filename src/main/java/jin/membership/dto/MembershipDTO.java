@@ -54,6 +54,4 @@ public class MembershipDTO {
 				+ payment_date + ", payment_method=" + payment_method + ", payment_price=" + payment_price + "]";
 	}
 	
-	
-	
 }

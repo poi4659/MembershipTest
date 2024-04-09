@@ -13,9 +13,11 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import jin.membership.control.Controller;
+import jin.membership.controller.MembershipDeleteController;
 import jin.membership.controller.MembershipInsertController;
 import jin.membership.controller.MembershipSelectController;
 import jin.membership.controller.MembershipSelectDetailController;
+import jin.membership.controller.MembershipUpdateController;
 import jin.membership.handler.MembershipHandlerAdapter;
 
 
@@ -50,34 +52,62 @@ public class MembershipDispatcherServlet extends HttpServlet {
 //		서블릿에서 사용할 Controller 객체를 초기화
 		Controller controller = null;
 		
+//		멤버십 가입
 		if (pathURL.equals("/MembershipInsert.mes")) {
 			controller = new MembershipInsertController();
 
 			membershipHandlerAdapter = controller.execute(request, response);
 			
-//			부서 조회 성공 확인-서버의 로그 파일에 기록됨
-			log.info("확인 - " + membershipHandlerAdapter);
+//			멤버십 가입 확인-서버의 로그 파일에 기록됨
+			log.info("멤버십 가입 확인 - " + membershipHandlerAdapter);
 			
-		} else if (pathURL.equals("/MembershipInsertView.mes")) {
-
+		}	else if (pathURL.equals("/MembershipInsertView.mes")) {
 			membershipHandlerAdapter = new MembershipHandlerAdapter();
 
-			membershipHandlerAdapter.setPath("/WEB-INF/view/membership_form.jsp");
-			log.info("확인 - " + membershipHandlerAdapter);
+//			멤버십 가입 성공 확인-서버의 로그 파일에 기록됨
+			membershipHandlerAdapter.setPath("/WEB-INF/view/membership_insert.jsp");
+			log.info("멤버십 가입 확인 - " + membershipHandlerAdapter);
 
 		}	else if (pathURL.equals("/MembershipSelect.mes")) {
 			controller = new MembershipSelectController();
 
 			membershipHandlerAdapter = controller.execute(request, response);
 
-			log.info("확인 - " + membershipHandlerAdapter);
+//			멤버십 조회 성공 확인-서버의 로그 파일에 기록됨
+			log.info("멤버십 조회 성공 확인 - " + membershipHandlerAdapter);
 
 		}	else if (pathURL.equals("/MembershipSelectDetail.mes")) {
 			controller = new MembershipSelectDetailController();
 
 			membershipHandlerAdapter = controller.execute(request, response);
 
-			log.info("확인 - " + membershipHandlerAdapter);
+//			멤버십 상세 조회 성공 확인-서버의 로그 파일에 기록됨
+			log.info("멤버십 상세 조회 성공 확인 - " + membershipHandlerAdapter);
+
+		}	else if (pathURL.equals("/MembershipUpdateView.mes")) {
+			membershipHandlerAdapter = new MembershipHandlerAdapter();
+
+//			멤버십 가입 성공 확인-서버의 로그 파일에 기록됨
+			membershipHandlerAdapter.setPath("/WEB-INF/view/membership_update.jsp");
+
+//			멤버십 수정 뷰 확인-서버의 로그 파일에 기록됨
+			log.info("멤버십 수정 뷰 확인 - " + membershipHandlerAdapter);
+
+		}	else if (pathURL.equals("/MembershipUpdate.mes")) {
+			controller = new MembershipUpdateController();
+
+			membershipHandlerAdapter = controller.execute(request, response);
+
+//			멤버십 수정 성공 확인-서버의 로그 파일에 기록됨
+			log.info("멤버십 수정 성공 확인 - " + membershipHandlerAdapter);
+
+		}	else if (pathURL.equals("/MembershipDelete.mes")) {
+			controller = new MembershipDeleteController();
+
+			membershipHandlerAdapter = controller.execute(request, response);
+
+//			멤버십 해지 성공 확인-서버의 로그 파일에 기록됨
+			log.info("멤버십 해지 성공 확인 - " + membershipHandlerAdapter);
 
 		}
 	

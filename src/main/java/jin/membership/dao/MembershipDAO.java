@@ -145,9 +145,9 @@ public class MembershipDAO implements MembershipService{
 
             preparedStatement = connection.prepareStatement(sql);
 
+//          결제 날짜는 sysdate여서 setString 안해줘도 됨
             preparedStatement.setString(1, membershipDTO.getUser_id());
             preparedStatement.setString(2, membershipDTO.getMembership_grade());
-//            preparedStatement.setTimestamp(3, java.sql.Timestamp.valueOf(membershipDTO.getPayment_date()));
             preparedStatement.setString(3, membershipDTO.getPayment_method());
             preparedStatement.setInt(4, membershipDTO.getPayment_price());
 
@@ -178,11 +178,55 @@ public class MembershipDAO implements MembershipService{
         return membershipDTO;
     }
 
+ // 멤버십 수정
     @Override
     public MembershipDTO membershipUpdate(MembershipDTO membershipDTO) {
-        // TODO Auto-generated method stub
-        return null;
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            // JNDI를 사용하여 데이터 소스 가져오기
+            Context context = new InitialContext();
+            DataSource dataSource = (DataSource) context.lookup("java:comp/env/jdbc");
+            connection = dataSource.getConnection();
+
+            // SQL 쿼리 작성-디벨로퍼에서 확인했는데 문제 없음
+            String sql = "UPDATE membership SET membership_grade = ?, payment_method = ?, payment_price = ? WHERE user_id = ?";
+
+            preparedStatement = connection.prepareStatement(sql);
+
+            preparedStatement.setString(1, membershipDTO.getMembership_grade());
+            preparedStatement.setString(2, membershipDTO.getPayment_method());
+            preparedStatement.setInt(3, membershipDTO.getPayment_price());
+            preparedStatement.setString(4, membershipDTO.getUser_id());
+
+            // 쿼리 실행
+            int count = preparedStatement.executeUpdate();
+
+            if (count > 0) {
+                // 자동 커밋 해제
+                connection.setAutoCommit(false);
+                connection.commit();
+                log.info("커밋되었습니다.");
+            } else {
+                connection.rollback();
+                log.info("롤백되었습니다.");
+            }
+
+        } catch (Exception e) {
+            log.error("멤버십 수정 실패 - " + e);
+        } finally {
+            try {
+                preparedStatement.close();
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return membershipDTO;
     }
+
 
     @Override
     public MembershipDTO membershipDelete(MembershipDTO membershipDTO) {

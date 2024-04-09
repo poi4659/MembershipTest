@@ -26,6 +26,12 @@
             <td>${membershipDTO.payment_price}</td>
         </tr>
     </table>
+    
+    <a href="./MembershipUpdateView.mes?user_id=${user_id}">
+    멤버십 수정하기</a>
+
+    <a href="./MembershipDeleteView.mes?user_id=${user_id}">
+    멤버십 해지하기</a>
 
 </body>
 </html>
