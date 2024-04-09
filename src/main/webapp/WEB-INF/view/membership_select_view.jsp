@@ -32,14 +32,15 @@
 <c:choose>
     <c:when test="${empty membershipDTO}">
         <p>멤버십에 가입하지 않았습니다.</p>
-        <a href="./MembershipInsert.mes">멤버십 가입하기</a>
+        <a href="./MembershipInsert.mes?user_id=${user_id}">멤버십 가입하기</a>
     </c:when>
     <c:otherwise>
         <p>멤버십에 가입되어 있습니다.</p>
         <!-- 여기에 가입 정보를 보여주는 코드 작성 -->
-        <a href="./MembershipSelectDetail.mes">멤버십 상세보기</a>
+        <a href="./MembershipSelectDetail.mes?user_id=${user_id}">멤버십 상세보기</a>
     </c:otherwise>
 </c:choose>
+
 </div>
 
 </div>

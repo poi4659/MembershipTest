@@ -7,6 +7,25 @@
 <title>멤버십 정보</title>
 </head>
 <body>
-<h1>상세보기</h1>
+	<h1>상세보기</h1>
+    <table border="1">
+        <tr>
+            <th>User ID</th>
+            <th>Membership Grade</th>
+            <th>Payment Date</th>
+            <th>Payment Method</th>
+            <th>Payment Price</th>
+        </tr>
+        <tr>
+            <td>${membershipDTO.user_id}</td>
+            <td>${membershipDTO.membership_grade}</td>
+
+            <td>${membershipDTO.payment_date}</td> 
+            
+            <td>${membershipDTO.payment_method}</td>
+            <td>${membershipDTO.payment_price}</td>
+        </tr>
+    </table>
+
 </body>
 </html>
