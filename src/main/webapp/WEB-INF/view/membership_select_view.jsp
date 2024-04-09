@@ -37,7 +37,7 @@
     <c:otherwise>
         <p>멤버십에 가입되어 있습니다.</p>
         <!-- 여기에 가입 정보를 보여주는 코드 작성 -->
-        <a href="./MembershipSelectDeatail.mes">멤버십 상세보기</a>
+        <a href="./MembershipSelectDetail.mes">멤버십 상세보기</a>
     </c:otherwise>
 </c:choose>
 </div>

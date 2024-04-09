@@ -72,7 +72,7 @@ public class MembershipDispatcherServlet extends HttpServlet {
 
 			log.info("확인 - " + membershipHandlerAdapter);
 
-		}	else if (pathURL.equals("/MembershipSelectDeatail.mes")) {
+		}	else if (pathURL.equals("/MembershipSelectDetail.mes")) {
 			controller = new MembershipSelectDetailController();
 
 			membershipHandlerAdapter = controller.execute(request, response);
