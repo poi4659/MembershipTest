@@ -33,6 +33,9 @@
 
     <a href="./MembershipDeleteView.mes?user_id=${membershipDTO.user_id}">
     멤버십 해지하기</a>
+    
+    <a href="./PaymentHistoryView.pay?user_id=${membershipDTO.user_id}">
+    결제 내역 보기</a>
 
 </body>
 </html>

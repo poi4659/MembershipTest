@@ -41,14 +41,9 @@ public class MembershipSelectController implements Controller {
                 request.setAttribute("payment_method", membershipDTO.getPayment_method());
                 request.setAttribute("payment_price", membershipDTO.getPayment_price());
             }
-
-            
             log.info(membershipDTO);
-        
         }
 
-
-        
         return membershipHandlerAdapter;
     }
 }
