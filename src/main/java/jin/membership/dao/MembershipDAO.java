@@ -230,7 +230,49 @@ public class MembershipDAO implements MembershipService{
 
     @Override
     public MembershipDTO membershipDelete(MembershipDTO membershipDTO) {
-        // TODO Auto-generated method stub
-        return null;
+    	Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            // JNDI를 사용하여 데이터 소스 가져오기
+            Context context = new InitialContext();
+            DataSource dataSource = (DataSource) context.lookup("java:comp/env/jdbc");
+            connection = dataSource.getConnection();
+
+            String sql = "delete from membership ";
+			sql += " where user_id = ? ";
+			log.info("SQL - " + sql);
+			
+            preparedStatement = connection.prepareStatement(sql);
+            
+            preparedStatement.setString(1, membershipDTO.getUser_id());
+
+            // 쿼리 실행
+            int count = preparedStatement.executeUpdate();
+
+            if (count > 0) {
+                // 자동 커밋 해제
+                connection.setAutoCommit(false);
+                connection.commit();
+                log.info("커밋되었습니다.");
+            } else {
+                connection.rollback();
+                log.info("롤백되었습니다.");
+            }
+
+        } catch (Exception e) {
+            log.error("멤버십 수정 실패 - " + e);
+        } finally {
+            try {
+                preparedStatement.close();
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return membershipDTO;
     }
+
+
 }

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="javax.servlet.http.HttpSession" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,6 +9,7 @@
 <title>멤버십 정보</title>
 </head>
 <body>
+
 	<h1>상세보기</h1>
     <table border="1">
         <tr>
@@ -19,18 +22,16 @@
         <tr>
             <td>${membershipDTO.user_id}</td>
             <td>${membershipDTO.membership_grade}</td>
-
             <td>${membershipDTO.payment_date}</td> 
-            
             <td>${membershipDTO.payment_method}</td>
             <td>${membershipDTO.payment_price}</td>
         </tr>
     </table>
     
-    <a href="./MembershipUpdateView.mes?user_id=${user_id}">
+    <a href="./MembershipUpdateView.mes?user_id=${membershipDTO.user_id}">
     멤버십 수정하기</a>
 
-    <a href="./MembershipDeleteView.mes?user_id=${user_id}">
+    <a href="./MembershipDeleteView.mes?user_id=${membershipDTO.user_id}">
     멤버십 해지하기</a>
 
 </body>

@@ -27,11 +27,11 @@ public class MembershipSelectController implements Controller {
 
         if (membershipDTO == null) {
             // 멤버십에 가입하지 않은 경우
-            membershipHandlerAdapter.setPath("/WEB-INF/view/membership_form.jsp"); // 가입 페이지로 이동
+            membershipHandlerAdapter.setPath("/WEB-INF/view/membership/membership_insert.jsp"); // 가입 페이지로 이동
         } else {
         	// 조회된 멤버십 정보를 JSP 파일에 전달
             request.setAttribute("membershipDTO", membershipDTO);
-            membershipHandlerAdapter.setPath("/WEB-INF/view/membership_select_view.jsp"); // 멤버십 정보 페이지로 이동
+            membershipHandlerAdapter.setPath("/WEB-INF/view/membership/membership_select_view.jsp"); // 멤버십 정보 페이지로 이동
             
 //          NullPointerException 방지
             if (membershipDTO != null) {

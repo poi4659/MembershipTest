@@ -65,7 +65,7 @@ public class MembershipDispatcherServlet extends HttpServlet {
 			membershipHandlerAdapter = new MembershipHandlerAdapter();
 
 //			멤버십 가입 성공 확인-서버의 로그 파일에 기록됨
-			membershipHandlerAdapter.setPath("/WEB-INF/view/membership_insert.jsp");
+			membershipHandlerAdapter.setPath("/WEB-INF/view/membership/membership_insert.jsp");
 			log.info("멤버십 가입 확인 - " + membershipHandlerAdapter);
 
 		}	else if (pathURL.equals("/MembershipSelect.mes")) {
@@ -87,8 +87,7 @@ public class MembershipDispatcherServlet extends HttpServlet {
 		}	else if (pathURL.equals("/MembershipUpdateView.mes")) {
 			membershipHandlerAdapter = new MembershipHandlerAdapter();
 
-//			멤버십 가입 성공 확인-서버의 로그 파일에 기록됨
-			membershipHandlerAdapter.setPath("/WEB-INF/view/membership_update.jsp");
+			membershipHandlerAdapter.setPath("/WEB-INF/view/membership/membership_update.jsp");
 
 //			멤버십 수정 뷰 확인-서버의 로그 파일에 기록됨
 			log.info("멤버십 수정 뷰 확인 - " + membershipHandlerAdapter);
@@ -100,6 +99,14 @@ public class MembershipDispatcherServlet extends HttpServlet {
 
 //			멤버십 수정 성공 확인-서버의 로그 파일에 기록됨
 			log.info("멤버십 수정 성공 확인 - " + membershipHandlerAdapter);
+
+		}	else if (pathURL.equals("/MembershipDeleteView.mes")) {
+			membershipHandlerAdapter = new MembershipHandlerAdapter();
+
+			membershipHandlerAdapter.setPath("/WEB-INF/view/membership/membership_delete.jsp");
+
+//			멤버십 해지 성공 확인-서버의 로그 파일에 기록됨
+			log.info("멤버십 해지 뷰 확인 - " + membershipHandlerAdapter);
 
 		}	else if (pathURL.equals("/MembershipDelete.mes")) {
 			controller = new MembershipDeleteController();

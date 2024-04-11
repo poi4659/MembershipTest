@@ -38,7 +38,7 @@ public class MembershipSelectDetailController implements Controller {
         request.setAttribute("membershipDTO", membershipDTO);
         
         // 멤버십 정보 페이지로 이동
-        membershipHandlerAdapter.setPath("/WEB-INF/view/membership_select_detail_view.jsp"); 
+        membershipHandlerAdapter.setPath("/WEB-INF/view/membership/membership_select_detail_view.jsp"); 
         
         return membershipHandlerAdapter;
     }

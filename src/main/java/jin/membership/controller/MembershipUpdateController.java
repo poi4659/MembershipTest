@@ -63,7 +63,7 @@ public class MembershipUpdateController implements Controller {
         MembershipHandlerAdapter membershipHandlerAdapter = new MembershipHandlerAdapter();
 
         // 멤버십 업데이트 완료 페이지로 이동
-        membershipHandlerAdapter.setPath("/WEB-INF/view/membership_update_view.jsp");
+        membershipHandlerAdapter.setPath("/WEB-INF/view/membership/membership_update_view.jsp");
 
         return membershipHandlerAdapter;
     }

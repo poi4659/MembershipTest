@@ -9,7 +9,8 @@
 <body>
     <h1>멤버십 수정</h1>
     <form action="./MembershipUpdate.mes" method="post" id="membershipSign">
-        아이디: <input type="text" name="user_id" id="user_id"><br>
+        아이디: <input type="text" name="user_id" id="user_id"
+        value="${param.user_id}"><br>
         멤버십 등급:
         <input type="radio" name="new_membership_grade" value="Gold"> Gold (10000원)
         <input type="radio" name="new_membership_grade" value="Silver"> Silver (7000원)<br>

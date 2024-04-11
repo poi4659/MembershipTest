@@ -66,7 +66,7 @@ public class MembershipInsertController implements Controller{
 		
 		// 가입 완료 페이지로 이동
 //		JSP 파일의 경로를 설정한 후 DeptHandlerAdapter 객체 생성하여 반환
-		membershipHandlerAdapter.setPath("/WEB-INF/view/membership_insert_view.jsp");
+		membershipHandlerAdapter.setPath("/WEB-INF/view/membership/membership_insert_view.jsp");
 		return membershipHandlerAdapter;
 
 	}
